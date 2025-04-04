@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legends Club </title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</head>
+<style>
+    /* Reset some default browser styles */
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    header {
+        background: linear-gradient(135deg, #0a1f3d, #042484);
+        padding: 10px 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        transition: background 0.3s ease;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .hero-logo img {
+        height: 50px;
+        transition: transform 0.3s ease;
+    }
+
+    .hero-logo img:hover {
+        transform: scale(1.1);
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links li a {
+        color: #ffd700;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        position: relative;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links li a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: #ffd700;
+        bottom: -5px;
+        left: 0;
+        transition: width 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+        color: #ffffff;
+    }
+
+    .nav-links li a:hover::after {
+        width: 100%;
+    }
+
+    /* Menu mobile (icône hamburger) */
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+    }
+
+    .menu-toggle .bar {
+        width: 25px;
+        height: 3px;
+        background-color: #ffd700;
+        transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover .bar {
+        background-color: #ffffff;
+    }
+
+    /* Animation de l'icône hamburger */
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            background: linear-gradient(135deg, #0a1f3d, #042484);
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            width: 200px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links.active {
+            display: flex;
+            
+        }
+
+        .menu-toggle {
+            display: flex;
+        }
+    }
+
+ 
+
+    :root {
+        --blue: #042484;
+        --gold: #fcdc3c;
+    }
+
+ 
+ 
+    section h1 {
+        margin-top: 80px;
+        font-size: clamp(28px, 5vw, 36px); 
+        font-weight: bold;
+        color: var(--blue);
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    /* CONTAINER GÉNÉRAL */
+    section div {
+        text-align: center;
+        max-width: 90%; 
+        margin: 0 auto;
+    }
+    
+    /* IMAGE */
+    section img {
+        width: 100%; 
+        max-width: 600px; 
+        height: auto;
+        display: block;
+        margin: 0 auto; /* Centre l'image */
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* TEXTE SOUS IMAGE */
+    .description p {
+        width: 100%; 
+        max-width: 600px; 
+        margin: 20px auto 0; 
+        font-size: clamp(16px, 1.8vw, 18px); 
+        line-height: 1.6;
+        color: #333;
+        text-align: center;
+        padding: 0 15px; 
+    }
+    
+    /* MEDIA QUERIES POUR PETITS ÉCRANS */
+    @media (max-width: 768px) {
+        section h1 {
+            font-size: 28px; 
+            margin-top: 50px; 
+        }
+    
+        section img {
+            width: 90%; 
+        }
+    
+        .description p {
+            font-size: 16px; 
+            padding: 0 10px; 
+        }
+    }
+    
+    @media (max-width: 480px) {
+        section h1 {
+            font-size: 24px;
+        }
+    
+        .description p {
+            font-size: 14px; 
+        }
+    }
+    
+    
+</style>
+<body>
+    <div class="drawing"></div>
+    <header>
+        <nav>
+            <div class="hero-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="#for">Course</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#sponsors">Sponsors</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <section > 
+        <div > <h1>Graphic design
+        </h1>
+        <img src="{{ url_for('static', filename='images/designer.jpg') }}" alt="design">
+    </div>
+    <div class="description">  <p> 
+        An engaging training session designed to elevate your creative skills and enhance your design capabilities. Throughout this comprehensive workshop, you will explore essential principles and techniques that form the foundation of effective design.
+        We'll cover key topics, including:
+        - *Design Theory*: Understand the core principles such as balance, contrast, and alignment that guide successful compositions.
+        - *Color Theory*: Learn how to effectively use color to evoke emotion and create visual harmony, along with techniques for developing compelling color palettes.
+        - *Typography*: Dive into the art of typography, including font selection, hierarchy, and layout, to enhance readability and impact in your designs.
+        - *Layout and Composition*: Discover how to organize elements effectively to create visually appealing and functional designs.
+        In addition to theory, this session will provide hands-on experience with popular design software. You'll have the opportunity to work on practical projects, allowing you to apply what you’ve learned in real-time and receive valuable feedback.
+        
+        Whether you're a beginner eager to learn the basics or an experienced designer looking to refine your skills, this training will equip you with the knowledge and confidence needed to create compelling visuals. Don't miss this chance to unlock your creative potential and take your graphic design journey to the next level!
+    </p></div>    </section>
+    <section class="footer">
+        <div>
+        <p>© 2025 The Legends.</p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("mobile-menu");
+            const navLinks = document.querySelector(".nav-links");
+    
+            menuToggle.addEventListener("click", function () {
+                navLinks.classList.toggle("active");
+                menuToggle.classList.toggle("active");
+            });
+    
+            // Fermer le menu lorsqu'on clique sur un lien (optionnel)
+            document.querySelectorAll(".nav-links li a").forEach(link => {
+                link.addEventListener("click", function () {
+                    navLinks.classList.remove("active");
+                    menuToggle.classList.remove("active");
+                });
+            });
+        });
+    </script>
+    
+</body> 
+</html>

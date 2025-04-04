@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legends Club</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #00308f 0%, #001a4d 100%);
+        background-attachment: fixed;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Custom font for headings */
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Poppins:wght@300;600&display=swap");
+
+      /* Hero Section Redesign */
+      #about {
+        position: relative;
+        overflow: hidden;
+        padding: 80px 0;
+        background: linear-gradient(135deg, #001a4d 0%, #00308f 100%);
+      }
+
+      .hero-content {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .hero-text {
+        flex: 1;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+        padding: 40px;
+        border-left: 4px solid #ffd700;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        background-color: rgba(255, 215, 0, 0.2);
+        color: #ffd700;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .hero-title {
+        font-size: 60px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 900;
+        color: #ffd700;
+        margin-bottom: 25px;
+        line-height: 1.1;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-description {
+        font-size: 18px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+        line-height: 1.8;
+        margin-bottom: 30px;
+      }
+
+      .hero-cta {
+        margin-top: 30px;
+      }
+
+      .hero-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+        color: #00308f;
+        padding: 12px 28px;
+        font-weight: bold;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+      }
+
+      .hero-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+      }
+
+      .hero-image {
+        flex: 0 0 45%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .logo-container {
+        position: relative;
+        width: 280px;
+        height: 280px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logo-container::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: rgba(255, 215, 0, 0.15);
+        animation: pulse 3s infinite ease-in-out;
+      }
+
+      .logo-container::after {
+        content: "";
+        position: absolute;
+        width: 110%;
+        height: 110%;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+      }
+
+      .hero-image img {
+        width: 220px;
+        height: 220px;
+        object-fit: contain;
+        border-radius: 50%;
+        background-color: white;
+        border: 3px solid #ffd700;
+        padding: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        z-index: 2;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.6;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.3;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.6;
+        }
+      }
+
+      /* Events Section */
+      #events {
+        background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIwLjAzIj48L3JlY3Q+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjRkZENzAwIiBmaWxsLW9wYWNpdHk9IjAuMTUiPjwvY2lyY2xlPgo8L3N2Zz4=");
+        padding: 100px 0;
+      }
+
+      .section-title {
+        font-size: 42px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 900;
+        color: #ffd700;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .section-description {
+        text-align: center;
+        color: #ffffff;
+        max-width: 800px;
+        margin: 0 auto 60px;
+        font-family: "Poppins", sans-serif;
+        font-size: 18px;
+        letter-spacing: 0.5px;
+      }
+
+      .event-list {
+        display: flex;
+        flex-direction: column;
+        gap: 60px;
+      }
+
+      .event-card {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 48, 143, 0.05) 0%,
+          rgba(255, 215, 0, 0.05) 100%
+        );
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        display: flex;
+        align-items: stretch;
+        position: relative;
+      }
+
+      .event-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .event-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 6px;
+        background: linear-gradient(to bottom, #ffd700, #00308f);
+      }
+
+      .event-content {
+        flex: 1;
+        padding: 40px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(255, 255, 255, 0.95) 100%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+
+      .event-content::after {
+        content: "";
+        position: absolute;
+        right: -20px;
+        bottom: -20px;
+        font-size: 120px;
+        font-weight: 900;
+        font-family: "Montserrat", sans-serif;
+        color: rgba(0, 48, 143, 0.07);
+      }
+
+      .event-image-container {
+        flex: 0 0 45%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(0, 48, 143, 0.05);
+        border-left: 1px solid rgba(255, 215, 0, 0.15);
+      }
+
+      .slideshow {
+        width: 100%;
+        height: 0;
+        padding-bottom: 75%; /* 4:3 aspect ratio */
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .slideshow-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        object-fit: cover;
+        transform: scale(1.05);
+      }
+
+      .slideshow-image.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .slideshow-nav {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 12px;
+        z-index: 10;
+      }
+
+      .slideshow-nav-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .slideshow-nav-dot:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+
+      .slideshow-nav-dot.active {
+        background-color: #ffd700;
+        transform: scale(1.2);
+        border: 2px solid white;
+      }
+
+      .event-date {
+        display: inline-block;
+        background: linear-gradient(135deg, #00308f 0%, #001a4d 100%);
+        color: #ffd700;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        letter-spacing: 1px;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+      }
+
+      .event-title {
+        font-size: 28px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        color: #00308f;
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .event-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(to right, #00308f, #ffd700);
+      }
+
+      .event-description {
+        color: #4a4a4a;
+        margin-bottom: 25px;
+        font-family: "Poppins", sans-serif;
+        line-height: 1.8;
+      }
+
+      .event-details {
+        font-size: 15px;
+        color: #555;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .event-details div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .event-details svg {
+        width: 18px;
+        height: 18px;
+        margin-right: 12px;
+        color: #00308f;
+      }
+
+      /* Footer */
+      footer {
+        background: linear-gradient(to bottom, #00308f, #001a4d);
+        color: #ffffff;
+        padding: 80px 0 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, #ffd700, #ffa500);
+      }
+
+      footer::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 215, 0, 0.1) 0%,
+          transparent 70%
+        );
+        z-index: 0;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 60px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .footer-logo img {
+        width: 140px;
+        height: 140px;
+        object-fit: contain;
+        background-color: #ffffff;
+        border-radius: 50%;
+        padding: 10px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        border: 4px solid #ffd700;
+      }
+
+      .footer-description {
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 300px;
+        font-family: "Poppins", sans-serif;
+        line-height: 1.8;
+      }
+
+      .footer-links h3,
+      .footer-contact h3 {
+        color: #ffd700;
+        font-size: 22px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        margin-bottom: 25px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .footer-links h3::after,
+      .footer-contact h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 30px;
+        height: 3px;
+        background: #ffd700;
+      }
+
+      .footer-links ul {
+        list-style-type: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 15px;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-family: "Poppins", sans-serif;
+        position: relative;
+        padding-left: 15px;
+      }
+
+      .footer-links a::before {
+        content: "›";
+        position: absolute;
+        left: 0;
+        color: #ffd700;
+        font-size: 18px;
+        transition: transform 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #ffd700;
+      }
+
+      .footer-links a:hover::before {
+        transform: translateX(3px);
+      }
+
+      .footer-contact p {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .footer-contact p svg {
+        margin-right: 12px;
+        color: #ffd700;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 40px;
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+        position: relative;
+        z-index: 1;
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .hero-content {
+          flex-direction: column-reverse;
+          text-align: center;
+        }
+
+        .hero-text {
+          border-left: none;
+          border-top: 4px solid #ffd700;
+          padding-top: 40px;
+        }
+
+        .hero-title {
+          font-size: 48px;
+        }
+
+        .logo-container {
+          margin-bottom: 40px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .event-card {
+          flex-direction: column;
+        }
+
+        .event-image-container {
+          width: 100%;
+          padding: 20px;
+        }
+
+        .slideshow {
+          padding-bottom: 56.25%; /* 16:9 aspect ratio for mobile */
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Hero Section -->
+    <section id="about">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <div class="hero-badge">Welcome to</div>
+            <h1 class="hero-title">Legends Club</h1>
+            <p class="hero-description">
+              The Legends Club, founded in 2023, is a community of innovators
+              and entrepreneurs dedicated to empowering the next generation. We
+              provide a supportive environment for skill development,
+              networking, and impactful projects. Through events, workshops, and
+              collaborations, we foster creativity, leadership, and social
+              responsibility.
+            </p>
+            <div class="hero-cta">
+              <a href="#events" class="hero-button">Explore Events</a>
+            </div>
+          </div>
+          <div class="hero-image">
+            <div class="logo-container">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-e45jzdweCZgOLxR5DxOxc93LvbEZyX.png"
+                alt="Legends Club Logo"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events">
+      <div class="container">
+        <h2 class="section-title">Our Signature Events</h2>
+        <p class="section-description">
+          Experience our carefully curated events designed to inspire, educate,
+          and connect our community members.
+        </p>
+
+        <div class="event-list" id="eventsList">
+          <!-- Event cards will be dynamically inserted here -->
+        </div>
+      </div>
+    </section>
+
+   
+    <script>
+      // Event data
+      const events = [
+        {
+          title: "LegendXtalk 1",
+          description:
+            "The first edition focused on The Power of Influence, featuring speakers Bahae Senari and Anass Ait Benhssen who shared insights on cultivating positive and authentic influence.",
+          date: "28 April 2023",
+          location: "University city of Tangier",
+          attendees: "100+ Attendees",
+          imageFolder: "LGDX1", // folder name
+        },
+        {
+          title: "LegendXtalk 2",
+          description:
+            'Dedicated to partnerships under the slogan "Entrepreneurship: Where Ideas Are Born," featuring entrepreneurs Abderazak Elyoussfi and Moulnakhla who shared their experiences and challenges.',
+          date: "17 February 2024",
+          location: "University city of Tangier",
+          attendees: "200+ Attendees",
+          imageFolder: "LGDX2",
+        },
+        {
+          title: "Science Week",
+          description:
+            "An immersive week celebrating science with researchers, students, and professionals through various interactive activities and workshops.",
+          date: "22 - 26 April 2024",
+          location: "University city of Tangier",
+          attendees: "1000+ Participants",
+          imageFolder: "SIENCES_WEEK",
+        },
+        {
+          title: "FICAT",
+          description:
+            "LEGENDS Club partnered with the Organization of Young Africans (OJA) for the International Festival of African Cultures (FICAT). We showcased African cultures through simulations and proudly represented Morocco by sharing traditional dishes and attire. This experience deepened our appreciation of cultural diversity and unity.",
+          date: "22 - 26 October 2024",
+          location: "Tangier",
+          attendees: "2000+ Attendees",
+          imageFolder: "Ficat",
+        },
+        {
+          title: "LegendXtalk 3",
+          description:
+            "The third edition focused on \"Innovation and Technology,\" featuring industry leaders who shared their insights on the future of tech and its impact on society",
+          date: "16 February 2025",
+          location: "Ahmed Boukmakh Cultural Center -Tanger",
+          attendees: "100+ Attendees",
+          imageFolder: "LGDX3",
+        },
+      ];
+
+      // Function to load images from a folder
+      async function loadImagesFromFolder(folderName) {
+        try {
+          // Fetch the directory contents
+          const response = await fetch(
+            `/api/get-images?folder=static/images/${folderName}`
+          );
+          if (!response.ok) {
+            console.error(`Failed to load images from folder ${folderName}`);
+            return [
+              `/static/images/placeholder.svg?height=300&width=400`,
+              `/static/images/placeholder.svg?height=300&width=400`,
+            ];
+          }
+
+          const imageFiles = await response.json();
+
+          // If no images found, return placeholders
+          if (!imageFiles || imageFiles.length === 0) {
+            return [
+              `/static/images/placeholder.svg?height=300&width=400`,
+              `/static/images/placeholder.svg?height=300&width=400`,
+            ];
+          }
+
+          // Return the full paths with size parameters
+          return imageFiles.map(
+            (filename) =>
+              `/static/images/${folderName}/${filename}?height=300&width=400`
+          );
+        } catch (error) {
+          console.error(`Error loading images from ${folderName}:`, error);
+          return [
+            `/static/images/placeholder.svg?height=300&width=400`,
+            `/static/images/placeholder.svg?height=300&width=400`,
+          ];
+        }
+      }
+
+      // Alternative approach if you can't create an API endpoint:
+      // This function simulates loading images based on a naming convention
+      function getImagesFromFolderPattern(folderName) {
+        // Determine how many images to expect in each folder
+        const imageCounts = {
+          "LGDX1": 5, 
+          "LGDX2": 10, 
+          "SIENCES_WEEK": 18, 
+          "Ficat": 10,
+          "LGDX3": 16, 
+        };
+
+        const count = imageCounts[folderName] || 0;
+
+        if (count === 0) {
+          return [
+            `/static/images/placeholder.svg?height=300&width=400`,
+            `/static/images/placeholder.svg?height=300&width=400`,
+          ];
+        }
+
+        // Create array of image paths based on naming convention
+        const images = [];
+        for (let i = 1; i <= count; i++) {
+          images.push(
+            `/static/images/${folderName}/${i}.jpg?height=300&width=400`
+          );
+        }
+
+        return images;
+      }
+
+      // Initialize the event cards
+      async function initializeEventCards() {
+        const eventsList = document.getElementById("eventsList");
+        eventsList.innerHTML = ""; // Clear existing content
+
+        for (let index = 0; index < events.length; index++) {
+          const event = events[index];
+
+          // Load images for this event
+          // For API approach:
+          // const images = await loadImagesFromFolder(event.imageFolder);
+
+          // For pattern-based approach (no API needed):
+          const images = getImagesFromFolderPattern(event.imageFolder);
+
+          // Create the event card
+          const eventCard = document.createElement("div");
+          eventCard.className = "event-card";
+          eventCard.innerHTML = `
+            <div class="event-content">
+                <div class="event-date">${event.date}</div>
+                <h3 class="event-title">${event.title}</h3>
+                <p class="event-description">${event.description}</p>
+                <div class="event-details">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>${event.location}</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span>${event.attendees}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="event-image-container">
+                <div class="slideshow" id="slideshow-${index}">
+                    ${images
+                      .map(
+                        (img, imgIndex) => `
+                        <img src="${img}" alt="${event.title} image ${
+                          imgIndex + 1
+                        }" class="slideshow-image ${
+                          imgIndex === 0 ? "active" : ""
+                        }">
+                    `
+                      )
+                      .join("")}
+                    <div class="slideshow-nav" id="slideshow-nav-${index}">
+                        ${images
+                          .map(
+                            (_, imgIndex) => `
+                            <div class="slideshow-nav-dot ${
+                              imgIndex === 0 ? "active" : ""
+                            }" data-index="${imgIndex}"></div>
+                        `
+                          )
+                          .join("")}
+                    </div>
+                </div>
+            </div>
+        `;
+          eventsList.appendChild(eventCard);
+
+          // Set up slideshow
+          setupSlideshow(index, images.length);
+        }
+      }
+
+      // Setup slideshow navigation
+      function setupSlideshow(eventIndex, imageCount) {
+        const slideshow = document.getElementById(`slideshow-${eventIndex}`);
+        const slideshowNav = document.getElementById(
+          `slideshow-nav-${eventIndex}`
+        );
+        const images = slideshow.querySelectorAll(".slideshow-image");
+        const dots = slideshowNav.querySelectorAll(".slideshow-nav-dot");
+        let currentImageIndex = 0;
+
+        function showImage(index) {
+          images[currentImageIndex].classList.remove("active");
+          dots[currentImageIndex].classList.remove("active");
+          currentImageIndex = index;
+          images[currentImageIndex].classList.add("active");
+          dots[currentImageIndex].classList.add("active");
+        }
+
+        function nextImage() {
+          showImage((currentImageIndex + 1) % images.length);
+        }
+
+        // Set up automatic slideshow
+        const intervalId = setInterval(nextImage, 5000);
+
+        // Clear interval when page is not visible to save resources
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            clearInterval(intervalId);
+          } else {
+            setInterval(nextImage, 5000);
+          }
+        });
+
+        // Set up navigation dots
+        dots.forEach((dot, index) => {
+          dot.addEventListener("click", () => showImage(index));
+        });
+      }
+
+      // Initialize when DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        initializeEventCards();
+        // Set current year in footer
+        document.getElementById("currentYear").textContent =
+          new Date().getFullYear();
+      });
+    </script>
+  </body>
+</html>

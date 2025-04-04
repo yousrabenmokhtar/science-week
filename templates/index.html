@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legends Club </title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}" >
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/FL.png') }}" >
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/p1.jpeg') }}" >
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/bg.png') }}" >
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/title.png') }}" >
+
+    
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/p2.jpeg') }}" >
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/p3.jpeg') }}" >
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</head>
+<style>
+    /* Reset some default browser styles */
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    header {
+        background: linear-gradient(135deg, #0a1f3d, #042484);
+        padding: 10px 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        transition: background 0.3s ease;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .hero-logo img {
+        height: 50px;
+        transition: transform 0.3s ease;
+    }
+
+    .hero-logo img:hover {
+        transform: scale(1.1);
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links li a {
+        color: #ffd700;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        position: relative;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links li a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: #ffd700;
+        bottom: -5px;
+        left: 0;
+        transition: width 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+        color: #ffffff;
+    }
+
+    .nav-links li a:hover::after {
+        width: 100%;
+    }
+
+    /* Menu mobile (icône hamburger) */
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+    }
+
+    .menu-toggle .bar {
+        width: 25px;
+        height: 3px;
+        background-color: #ffd700;
+        transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover .bar {
+        background-color: #ffffff;
+    }
+
+    /* Animation de l'icône hamburger */
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            background: linear-gradient(135deg, #0a1f3d, #042484);
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            width: 200px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .menu-toggle {
+            display: flex;
+        }
+    }
+
+ 
+
+    :root {
+        --blue: #042484;
+        --gold: #fcdc3c;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+    .parallax-wrapper {
+    height: 100vh;
+    width: 100%;
+    background-image: url('/static/images/bleu.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-content {
+    width: 60%;
+    padding: 80px 20px;
+    color: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+#parallax-container {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 50px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.product-row {
+margin:auto;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.product-card {
+    height: 250px;
+    width: 250px;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden; /* Empêche l'image de déborder */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition fluide */
+}
+
+.product-card img {
+    animation: zoomRotateFade 1.5s ease-out forwards;
+    border-radius: 8px; /* Optionnel : pour adoucir les bords de l'image */
+}
+
+
+/* Effet de zoom au survol */
+.product-card:hover img {
+    transform: scale(1.1); /* Zoom de 10% */
+}
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.header-icons {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.icon-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-box i {
+    color: var(--gold);
+    font-size: 1.5rem;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #ffffff, var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    animation: slideUp 0.8s ease 0.2s forwards;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: slideUp 0.8s ease 0.4s forwards;
+}
+
+.description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    color: white;
+    opacity: 0;
+    animation: slideUp 0.8s ease 0.6s forwards;
+}
+
+.cta-container {
+    display: flex;
+    gap: 1.5rem;
+    opacity: 0;
+    animation: slideUp 0.8s ease 0.8s forwards;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-primary {
+    background: var(--gold);
+    color: var(--blue);
+}
+
+.cta-secondary {
+    border: 2px solid var(--gold);
+    color: var(--gold);
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+ /* Responsive Design */
+ @media (max-width: 992px) {
+       
+
+        .logo-container {
+          margin-bottom: 40px;
+        }
+      }
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+            .parallax-wrapper {
+                flex-direction: column; /* Stack hero-content and parallax-container vertically */
+                align-items: center; /* Center items horizontally */
+                height: auto; /* Allow the container to grow based on content */
+            }
+
+            .hero-content {
+                margin:40px;
+                width: 100%; /* Take full width */
+                padding: 40px 20px; /* Reduce padding */
+                text-align: center; /* Center text */
+            }
+
+            #parallax-container {
+                width: 100%; /* Take full width */
+                margin-right: 0; /* Remove margin */
+                padding-top: 20px; /* Reduce padding */
+                height: auto;  /* Adjust height */
+                align-items: center;  /* Center images */
+            }
+
+            .title {
+                font-size: 2rem; /* Reduce title size */
+            }
+
+            .subtitle {
+                font-size: 1rem; /* Reduce subtitle size */
+            }
+
+            .description {
+                font-size: 1rem; /* Reduce description size */
+            }
+           
+
+            .product-card {
+                width: 50%;
+                margin-bottom: 10px; /* Add some space between images */
+            }
+          .product-row {
+                display: flex;
+                  flex-wrap: wrap;
+                  justify-content: center;
+                  gap: 20px;
+                  width: 100%;
+                  margin-right: 0;
+                  padding: 0;
+          }
+
+            .product-card {
+                flex-basis: calc(50% - 10px); /* Two images per row */
+                max-width: calc(50% - 10px);
+                height: auto; /* Maintain aspect ratio */
+                width: auto;
+            }
+
+             .parallax-wrapper {
+                height: auto;
+                 }
+            .parallax-wrapper {
+                height: auto;
+                min-height: 100vh;
+            }
+          #parallax-container {
+                height: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1rem;
+            }
+
+            .subtitle {
+                font-size: 0.8rem;
+            }
+
+            .description {
+                font-size: 0.5rem;
+            }
+
+            .cta-button {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.8rem;
+            }
+
+            .product-card {
+                height: 120px;
+                width: 120px;
+            }
+        }
+        /* Animation pour les images */
+
+
+        /* Section de l'image */
+        .hero-image {
+          flex: 1 1 40%;
+          min-width: 300px;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1;
+        }
+        
+        /* Conteneur du logo */
+        .logo-container {
+          position: relative;
+          width: 100%;
+          max-width: 450px;
+          filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+          transform-origin: center;
+          /* Animation du logo */
+          animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Style de l'image */
+        .logo-container img {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-radius: 10px;
+          transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        
+        /* Animation de flottement pour l'image */
+        @keyframes float {
+          0% {
+            transform: translateY(0px) rotate(0deg);
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+          }
+          50% {
+            transform: translateY(-15px) rotate(2deg);
+            filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.15));
+          }
+          100% {
+            transform: translateY(0px) rotate(0deg);
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+          }
+        }
+        
+        /* Effet au survol de l'image */
+        .logo-container:hover img {
+          transform: scale(1.05);
+          filter: brightness(1.1) contrast(1.05);
+        }
+        
+        /* Effet de particules dorées */
+        .logo-container::before {
+          content: '';
+          position: absolute;
+          top: -20px;
+          right: -20px;
+          width: 80px;
+          height: 80px;
+          background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+          opacity: 0.5;
+          border-radius: 50%;
+          animation: pulse 3s infinite alternate;
+        }
+        
+        .logo-container::after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: -10px;
+          width: 60px;
+          height: 60px;
+          background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+          opacity: 0.5;
+          border-radius: 50%;
+          animation: pulse 4s 1s infinite alternate;
+        }
+        
+        @keyframes pulse {
+          0% {
+            transform: scale(0.8);
+            opacity: 0.3;
+          }
+          100% {
+            transform: scale(1.2);
+            opacity: 0.7;
+          }
+        }
+        
+        /* Icônes */
+        .fas {
+          font-size: 1.1rem;
+        }
+        
+      
+</style>
+<body>
+    <div class="drawing"></div>
+    <header>
+        <nav>
+            <div class="hero-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+
+                <li><a href="#for">Course</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#sponsors">Sponsors</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+    <div class="parallax-wrapper" id="parallaxWrapper">
+        <div class="hero-content" id="heroContent">
+           
+
+            <h1 class="title">The Legends Science Week 2</h1>
+            <h2 class="subtitle">Shape your future with confidence</h2>
+            <p class="description">
+                Science Week is an immersive week dedicated to the celebration and dissemination of science in all its forms. This event brings together researchers, students, professionals, and the general public through various activities that highlight the importance of science in our daily lives.
+            </p>
+
+            <div class="cta-container">
+                <a href="#" class="cta-button cta-primary">
+                    <i class="fas fa-info-circle"></i>
+                    More information
+                </a>
+
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <div class="logo-container">
+              <img
+                 src="{{ url_for('static', filename='images/title.png') }}"
+                alt="Legends Club Logo"
+              />
+            </div>
+          </div>
+    </div>
+
+     <!--Key points of the event -->
+     <!-- Key points of the event -->
+<section id="key-points">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">
+            <span class="line"></span> Key points <span class="line"></span>
+        </h2>
+        
+        <div class="key-points-grid"data-aos="fade-up" data-aos-delay="100">
+            <div class="key-point" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h3>Interactive Workshops</h3>
+                <p>Practical activities led by experts.</p>
+            </div>
+            <div class="key-point" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-handshake"></i>
+                <h3>Networking Opportunities</h3>
+                <p>Connect with teachers, students and industry professionals.</p>
+            </div>
+            <div class="key-point" data-aos="fade-up" data-aos-delay="400">
+                <i class="fas fa-gift"></i>
+                <h3>Funny Gifts</h3>
+                <p>Exclusive event items and prizes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Us -->
+<section id="about" class="about-section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">
+            About <span class="highlight">Us</span>
+        </h2>
+        <div class="about-content">
+            <div class="about-text" data-aos="fade-right" data-aos-delay="100">
+                <h3>We Are THE LEGENDS</h3>
+                <p>
+                    "The Legends" is a university club dedicated to developing soft skills and training students 
+                    to enhance their interpersonal abilities. Through events, conferences, and hands-on activities,
+                    we prepare our members for the challenges of the professional world by instilling essential qualities for success. 
+                    Since our creation, we have made our mark by organizing impactful events, 
+                    promoting networking, and inspiring our members to fully harness their potential.
+                </p>
+               
+                <a href="{{ url_for('about') }}">
+                    <button class="btn">Read More</button>
+                </a>
+            </div>
+            <div class="about-image" data-aos="fade-left" data-aos-delay="200">
+                <img src="{{ url_for('static', filename='images/legends.jpeg') }}" alt="the Legends" class="sponsor-logo">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!------------------------------formation-------------------------------------->
+<!------------------------------ Formation -------------------------------------->
+<section class="formation" id="for">
+    <div class="title-container">
+      <h2 class="section-title" data-aos="fade-up">
+        <span class="line"></span> Course <span class="line"></span>
+      </h2>
+    </div>
+    <div class="news-container">
+      <div class="news-card-wrapper" data-aos="fade-up" data-aos-delay="100">
+        <div class="news-card">
+          <div class="news-image">
+            <img src="{{ url_for('static', filename='images/informatique.jpeg') }}" alt="informatique">
+          </div>
+          <div class="news-content">
+            <a href="{{ url_for('informatique') }}" class="news-title">Revolution in Computing: Cloud Computing Reaches New Heights</a>
+            <p class="news-description">Experts agree that the recent advances in...</p>
+            <p class="news-date">08/03/2025</p>
+          </div>
+        </div>
+      </div>
+    
+      <div class="news-card-wrapper" data-aos="fade-up" data-aos-delay="200">
+        <div class="news-card">
+          <div class="news-image">
+            <img src="{{ url_for('static', filename='images/design.jpg') }}" alt="design">
+          </div>
+          <div class="news-content">
+            <a href={{ url_for('design') }} class="news-title">The Art of Creativity: Designing with Passion</a>
+            <p class="news-description">Explore the fusion of art and technology in modern design...</p>
+            <p class="news-date">08/03/2025</p>
+          </div>
+        </div>
+      </div>
+    
+      <div class="news-card-wrapper" data-aos="fade-up" data-aos-delay="300">
+        <div class="news-card">
+          <div class="news-image">
+            <img src="{{ url_for('static', filename='images/soft skills.jpeg') }}" alt="soft skills">
+          </div>
+          <div class="news-content">
+            <a href={{ url_for('softSkills') }} class="news-title">The impact of soft skills on professional success</a>
+            <p class="news-description">In a constantly evolving work environment...</p>
+            <p class="news-date">08/03/2025</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+ 
+       <!-- Event Statistics Section -->
+
+       <section id="stats" class="statistics_section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                <span class="line"></span> Statistics <span class="line"></span>
+            </h2>
+            <div class="statistics-numbers ml-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="stat-number">300</h3>
+                    <p class="stat-label">STUDENTS</p>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="stat-number">20</h3>
+                    <p class="stat-label">SCHOOL</p>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="500">
+                    <h3 class="stat-number">80</h3>
+                    <p class="stat-label">EVENT ORGANIZERS</p>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="600">
+                    <h3 class="stat-number">50</h3>
+                    <p class="stat-label">PROFESSORS</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+ <!-- Sponsors Section -->
+
+ <section id="sponsors" class="sponsoring_section">
+    <div class="container text-center">
+        <h2 class="section-title" data-aos="fade-up">
+            <span class="line"></span> Our sponsoring <span class="line"></span>
+        </h2>
+        <div class="sponsors-logos"data-aos="fade-up" data-aos-delay="200">
+            <div class="logos-wrapper">
+                <img src="{{ url_for('static', filename='images/uae.jpg') }}" alt="uae" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/fstt1.jpeg') }}" alt="fst" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/cite.png') }}" alt="cite" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/uae.jpg') }}" alt="logos" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/oja.jpg') }}" alt="oja" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/uae.jpg') }}" alt="uae" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/groupe.png') }}" alt="groupe iki" class="sponsor-logo">
+               >
+                <img src="{{ url_for('static', filename='images/fstt1.jpeg') }}" alt="fst" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/cite.png') }}" alt="cite" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/uae.jpg') }}" alt="logos" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/oja.jpg') }}" alt="oja" class="sponsor-logo">
+                <img src="{{ url_for('static', filename='images/groupe.png') }}" alt="groupe iki" class="sponsor-logo">
+                
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+       <!-- Contact us -->
+  <!-- Autres parties de la page (header, menu, etc.) -->
+ <section id="contact" class="contact-section">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">
+      <span class="line"></span> Contact US <span class="line"></span>
+    </h2>
+
+    <div class="container1">
+      <!-- Bloc des infos de contact -->
+      <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
+        <div class="contact-item">
+          <a href="https://www.instagram.com/thelgdclub.cut/">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <div>
+            <h4>Follow us on Instagram </h4>
+            <p>thelgdclub.cut</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <h4>Let's call each other </h4>
+            <p>0659904556</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <h4>Send us an email</h4>
+            <p>the.legends.club08@gmail.com</p>
+          </div>
+        </div>
+        <!-- Carte Google Maps -->
+        <div class="contact-map" data-aos="fade-up" data-aos-delay="300">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3238.123456789012!2d-5.813123!3d35.764012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDQ1JzUwLjQiTiA1wrA0OCc0Ny4yIlc!5e0!3m2!1sen!2sma!4v1621234567890!5m2!1sen!2sma" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+      
+        <!-- backk Part -->
+                    <!-- Bloc Flash Messages (dans index.html) -->
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                      <ul class="flashes">
+                        {% for message in messages %}
+                          <li>{{ message }}</li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  {% endwith %}
+        
+
+      <!-- Bloc du formulaire de contact -->
+      <div class="contact-form" data-aos="fade-left" data-aos-delay="100">
+        <form method="POST" action="{{ url_for('submit_form') }}">
+          <label for="name">Name</label>
+          <input type="text" name="name" placeholder="Enter your name" required>
+
+          <label for="email">Email</label>
+          <input type="email" name="email" placeholder="Enter email address" required>
+
+          <label for="subject">Subject</label>
+          <input type="text" name="subject" placeholder="Enter your subject" required>
+
+          <label for="message">Message</label>
+          <textarea name="message" placeholder="Message" required></textarea>
+          <div class="contact-button">
+          <button type="submit">Send Message</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Frequently Asked Questions (FAQ) Section -->
+    <section id="faq">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                <span class="line"></span> FAQ <span class="line"></span>
+            </h2>
+            <div class="faq-item">
+                <h3>How do I register?</h3>
+                <p>Click the “Register Now” button at the top of this page.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is there a fee to participate?</h3>
+                <p>The event is free for students with a valid ID.</p>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div>
+        <p>© 2025 The Legends.</p>
+    </div>
+    <button id="scrollToTop">
+        ↑
+    </button>
+    
+</section>    
+
+
+    <script>
+        // Sélectionner l'élément du menu toggle (icône hamburger) et les liens de navigation
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        // Ajouter un écouteur d'événement pour le clic sur l'icône hamburger
+        mobileMenu.addEventListener('click', () => {
+            // Basculer la classe 'active' sur les liens de navigation
+            navLinks.classList.toggle('active');
+            // Basculer la classe 'active' sur l'icône hamburger
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Fermer le menu lorsqu'un lien est cliqué (optionnel)
+        navLinks.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        
+function animateNumbers() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    statNumbers.forEach((stat) => {
+      const target = parseInt(stat.textContent.replace('.', ''));
+      let count = 0;
+      const increment = Math.ceil(target / 100); // Incrément dynamique
+      const interval = setInterval(() => {
+        count += increment;
+        if (count >= target) {
+          stat.textContent = target.toLocaleString(); // Formater le chiffre
+          clearInterval(interval);
+        } else {
+          stat.textContent = count.toLocaleString();
+        }
+      }, 30); // Intervalle en millisecondes
+    });
+  }
+
+
+  document.addEventListener('DOMContentLoaded', animateNumbers);
+
+// Animation au scroll Statistiques
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-item').forEach((item) => {
+    observer.observe(item);
+});
+
+// Effet de comptage des nombres Statistiques
+const stats = document.querySelectorAll('.stat-number');
+const speed = 200;
+
+stats.forEach((stat) => {
+    const updateCount = () => {
+        const target = +stat.innerText;
+        const count = +stat.innerText;
+        const increment = target / speed;
+        
+        if(count < target) {
+            stat.innerText = Math.ceil(count + increment);
+            setTimeout(updateCount, 1);
+        } else {
+            stat.innerText = target;
+        }
+    };
+    
+    observer.observe(stat.parentElement, {
+        threshold: 1,
+        once: true
+    }).then(() => updateCount());
+});
+
+    </script>
+   
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+  AOS.init();
+</script>  
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let scrollToTopBtn = document.getElementById("scrollToTop");
+
+    window.addEventListener("scroll", function () {
+        if (window.scrollY > 200) {
+            scrollToTopBtn.style.display = "flex"; 
+        } else {
+            scrollToTopBtn.style.display = "none"; 
+        }
+    });
+
+    scrollToTopBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+});
+</script>
+
+    
+</body>
+
+</html>

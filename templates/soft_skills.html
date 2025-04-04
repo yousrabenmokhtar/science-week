@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legends Club </title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+</head>
+<style>
+    /* Reset some default browser styles */
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    header {
+        background: linear-gradient(135deg, #0a1f3d, #042484);
+        padding: 10px 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        transition: background 0.3s ease;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .hero-logo img {
+        height: 50px;
+        transition: transform 0.3s ease;
+    }
+
+    .hero-logo img:hover {
+        transform: scale(1.1);
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links li a {
+        color: #ffd700;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        position: relative;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links li a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: #ffd700;
+        bottom: -5px;
+        left: 0;
+        transition: width 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+        color: #ffffff;
+    }
+
+    .nav-links li a:hover::after {
+        width: 100%;
+    }
+
+    /* Menu mobile (icône hamburger) */
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+    }
+
+    .menu-toggle .bar {
+        width: 25px;
+        height: 3px;
+        background-color: #ffd700;
+        transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover .bar {
+        background-color: #ffffff;
+    }
+
+    /* Animation de l'icône hamburger */
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            background: linear-gradient(135deg, #0a1f3d, #042484);
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            width: 200px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links.active {
+            display: flex;
+            
+        }
+
+        .menu-toggle {
+            display: flex;
+        }
+    }
+
+ 
+
+    :root {
+        --blue: #042484;
+        --gold: #fcdc3c;
+    }
+    .content {
+        max-width: 90%; 
+        margin: 80px ;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        color: #042484;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .section {
+        margin-bottom: 30px;
+    }
+    .section p {
+        font-size: 16px;
+        color: black;
+        width: 100%; 
+        max-width: 90%; 
+        line-height: 1.6;
+
+    }
+ 
+    section img {
+        width: 100%; 
+        max-width: 600px; 
+        height: auto;
+        display: block;
+        margin-top:20px;
+        margin: 0 auto; /* Centre l'image */
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    @media (max-width: 768px) {
+        .content {
+            margin: 40px auto; /* Réduit la marge */
+            padding: 15px;
+        }
+    
+        h2 {
+            font-size: 1.8rem; /* Réduit légèrement */
+        }
+    
+        .section p {
+            font-size: 1rem;
+        }
+    
+        section img {
+            max-width: 100%; /* Image prend toute la largeur */
+        }
+    }
+    
+    /* 📲 Très petits écrans (mobiles < 480px) */
+    @media (max-width: 480px) {
+        .content {
+            margin: 20px auto;
+            padding: 10px;
+        }
+    
+        h2 {
+            font-size: 1.5rem;
+        }
+    
+        .section p {
+            font-size: 0.9rem;
+        }
+    }
+    
+ 
+    @media (max-width: 1024px) {
+        .content {
+            margin: 60px auto;
+        }
+    
+        h2 {
+            font-size: 2rem;
+        }
+    }
+    
+    
+</style>
+<body>
+    <div class="drawing"></div>
+    <header>
+        <nav>
+            <div class="hero-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="#for">Course</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#sponsors">Sponsors</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+<section>
+    <div class="content" >
+        <div class="section">
+            <h2 data-aos="fade-up" >1. Emotional Intelligence (EI)</h2>
+            <img  data-aos="fade-left" data-aos-delay="100" src="{{ url_for('static', filename='images/EI.png') }}" alt="ia">
+            <p data-aos="fade-right" data-aos-delay="200"> A comprehensive training session designed to help participants understand and enhance their emotional skills in both personal and professional settings. This session will cover the key components of EI, including self-awareness, self-regulation, empathy, and social skills.
+
+                Participants will learn how to recognize and manage their own emotions, as well as how to effectively navigate interpersonal relationships. Through interactive discussions, practical exercises, and real-life scenarios, attendees will develop strategies to improve communication,conflict resolution, and leadership abilities.
+                
+                This training is ideal for anyone looking to enhance their emotional intelligence and create a more positive and productive work environment. Don't miss this opportunity to boost your EI and strengthen your relationships both at work and beyond!</p>
+        </div>
+        <div class="section">
+            <h2 data-aos="fade-up" data-aos-delay="300">2. Networking</h2>
+            <img data-aos="fade-left" data-aos-delay="400"src="{{ url_for('static', filename='images/networking.jpg') }}" alt="networking">
+            <p data-aos="fade-right" data-aos-delay="500">An interactive training session designed to equip participants with essential skills for building and maintaining professional relationships. In today's interconnected world, effective networking is crucial for career advancement and personal growth.
+
+                This session will cover key topics such as the fundamentals of networking, strategies for making meaningful connections, and best practices for leveraging social media and professional platforms. Participants will engage in hands-on activities, role-playing scenarios, and discussions to practice their networking skills in a supportive environment.
+                
+                Whether you're looking to expand your professional circle, enhance your communication skills, or learn how to network with confidence, this training is perfect for you. Don't miss the chance to enhance your networking abilities and unlock new opportunities!</p>
+        </div>
+        <div class="section">
+            <h2 data-aos="fade-up" >3. Succeed in Job Interviews</h2>
+            <img data-aos="fade-left" data-aos-delay="700" src="{{ url_for('static', filename='images/job.jpg') }}" alt="job">
+            <p data-aos="fade-right" data-aos-delay="800">An engaging training session designed to equip you with the skills and confidence needed to excel in job interviews. This workshop will cover essential topics such as:
+
+                - Understanding Interview Types Explore different :formats, from behavioral to technical interviews.
+                - *Crafting Your Narrative*: Learn how to effectively present your experiences and skills.
+                - *Common Questions & Best Responses*: Prepare for frequently asked questions and learn strategies for answering them.
+                - *Body Language & Presentation*: Discover the importance of non-verbal communication and how to present yourself professionally.
+                - *Mock Interviews*: Participate in practice interviews to receive constructive feedback.
+                
+                Whether you're entering the a student or seeking a career change, this session will provide practical tools and insights to help you stand out. Join us and take the next step toward your career goals!</p>
+        </div>
+    </div> </section>
+    <section class="footer">
+        <div>
+        <p>© 2025 The Legends.</p>
+    </div> </section>
+   
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+<script>    
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("mobile-menu");
+            const navLinks = document.querySelector(".nav-links");
+    
+            menuToggle.addEventListener("click", function () {
+                navLinks.classList.toggle("active");
+                menuToggle.classList.toggle("active");
+            });
+    
+            // Fermer le menu lorsqu'on clique sur un lien (optionnel)
+            document.querySelectorAll(".nav-links li a").forEach(link => {
+                link.addEventListener("click", function () {
+                    navLinks.classList.remove("active");
+                    menuToggle.classList.remove("active");
+                });
+            });
+        });
+    </script>
+    
+</body> 
+</html>
