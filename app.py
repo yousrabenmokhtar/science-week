@@ -1,16 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 import firebase_admin
 from firebase_admin import credentials, firestore
-import json
-import os
 
 app = Flask(__name__)
 app.secret_key = "votre_cle_secrete"
 
-
-service_account_info = json.loads(os.environ["GOOGLE_APPLICATION_CREDENTIALS_JSON"])
-cred = credentials.Certificate(service_account_info)
-
+# Initialisation de Firebase avec le fichier de clé
+cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
